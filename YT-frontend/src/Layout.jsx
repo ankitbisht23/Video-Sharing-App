@@ -1,0 +1,38 @@
+import React from 'react';
+import { Outlet, Navigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
+import { useSelector,useDispatch } from 'react-redux';
+import Login from './components/Login/Login';
+import { setUser, setAccessToken } from './store/authSlice.js';
+
+function Layout() {
+  console.log("layout")
+  const dispatch = useDispatch();
+  let accessToken = useSelector(state => state.auth.accessToken);
+  // const navigate=useNavigate()
+  if(!accessToken){
+    accessToken = localStorage.getItem('accessToken');
+    const userstr=localStorage.getItem('user')
+    const user=JSON.parse(userstr);
+    dispatch(setUser(user));
+    dispatch(setAccessToken(accessToken));
+    console.log("get from storage",accessToken)
+
+    console.log(typeof accessToken )
+  }
+
+  if (!accessToken || typeof accessToken !== 'string') {
+    console.log("no accesstoken")
+   
+    return(
+      <Login/>
+    )
+  }
+  else{
+    return <Outlet />;
+  }
+
+  
+}
+
+export default Layout;
