@@ -15,40 +15,49 @@ const Header = ({ children }) => {
 
   return (
     <div className="flex flex-col h-screen">
-      <header className="bg-gray-800 text-white flex items-center justify-between px-4 py-2">
-        <div className="flex items-center">
-          <button onClick={toggleSidebar} className="text-2xl mr-4 focus:outline-none">
-            {sidebarOpen ? <FaTimes /> : <FaBars />}
-          </button>
-          <div className="relative">
+      <header className="bg-[#212121] text-white flex px-4 py-2 justify-between">
+        
+        <div className='flex flex-row gap-4 justify-around'>
+          <div className="flex items-center">
+            <button onClick={toggleSidebar} className="text-2xl mr-4 focus:outline-none">
+              {sidebarOpen ? <FaTimes /> : <FaBars />}
+            </button>
+            
+          </div>
+        
+          <div className='text-3xl font-bold'>Stream IO</div>
+        </div>
+        <div className="relative w-[40%]">
             <input
               type="text"
               placeholder="Search..."
-              className="bg-gray-700 text-white px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="bg-gray-700 text-white px-4 py-2 w-[100%]  focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
             <FaSearch className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400" aria-label="Search Icon" />
           </div>
-        </div>
-        <div className="relative">
-          <button onClick={toggleUserDropdown} className="text-2xl focus:outline-none">
-            {user?.avatar?.url ? (
-              <img src={user.avatar.url} alt="User Avatar" className="w-8 h-8 rounded-full" />
-            ) : (
-              <FaUserCircle />
+        
+          <div className="relative">
+            <button onClick={toggleUserDropdown} className="text-2xl focus:outline-none">
+              {user?.avatar?.url ? (
+                <img src={user.avatar.url} alt="User Avatar" className="w-10 h-10 rounded-full " />
+              ) : (
+                <FaUserCircle />
+              )}
+            </button>
+            {userDropdownOpen && (
+              <div className="absolute flex flex-row right-0 mt-2 bg-gray-700 rounded-md shadow-lg z-50">
+                <div><Link to={"/profile"}>
+                <a href="#" className="block px-4 py-2 hover:bg-gray-900">User Profile</a>
+                </Link>
+                </div>
+                <div><a href="#" className="block px-4 py-2 hover:bg-gray-900">
+                  <FaSignOutAlt className="inline-block mr-2" />
+                  Logout
+                </a>
+                </div>
+              </div>
             )}
-          </button>
-          {userDropdownOpen && (
-            <div className="absolute right-0 mt-2 bg-gray-700 rounded-md shadow-lg z-50">
-              <Link to={"/profile"}>
-              <a href="#" className="block px-4 py-2 hover:bg-gray-900">User Profile</a>
-              </Link>
-              <a href="#" className="block px-4 py-2 hover:bg-gray-900">
-                <FaSignOutAlt className="inline-block mr-2" />
-                Logout
-              </a>
-            </div>
-          )}
-        </div>
+          </div>
       </header>
 
       <div className="flex flex-1 overflow-hidden">
