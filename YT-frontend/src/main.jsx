@@ -15,6 +15,8 @@ import { Route, RouterProvider, createBrowserRouter, createRoutesFromElements } 
 import Layout from './Layout.jsx';
 import Playlist from './components/Playlist.jsx';
 import UserProfile from './components/UserProfile.jsx';
+import Header from './components/Header/Header.jsx';
+import DetailPage from './components/Videos/DetailPage.jsx';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -27,7 +29,7 @@ const router = createBrowserRouter(
       <Route path="likedVideos" element={<LikedVideosPage/>}/>
       <Route path="history" element={<WatchHistoryPage/>}/>
       <Route path="playlist" element={<Playlist/>}/>
-      <Route path="watch/:id" element={<VideoPage />} />
+      <Route path="watch/:id" element={<DetailPage/>} />
 
     </Route>
   )

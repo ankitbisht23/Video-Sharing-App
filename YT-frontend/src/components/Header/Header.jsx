@@ -14,7 +14,7 @@ const Header = ({ children }) => {
   const user = useSelector(state => state.auth.user);
 
   return (
-    <div className="flex flex-col h-screen">
+    <div className="flex flex-col">
       <header className="bg-[#212121] text-white flex px-4 py-2 justify-between">
         
         <div className='flex flex-row gap-4 justify-around'>
@@ -60,8 +60,8 @@ const Header = ({ children }) => {
           </div>
       </header>
 
-      <div className="flex flex-1 overflow-hidden">
-        <aside className={`bg-gray-700 text-white transition-all duration-300 ${sidebarOpen ? 'w-64' : 'w-16'}`}>
+      <div className="flex flex-1 overflow-hidden z-100">
+        <aside className={`bg-[#212121] text-white transition-all duration-300 ${sidebarOpen ? 'w-64' : 'w-16'}`}>
           <nav className="p-4">
             <ul>
               <li className="mb-4">
@@ -100,7 +100,7 @@ const Header = ({ children }) => {
           </nav>
         </aside>
 
-        <main className="flex-1 bg-gray-100 p-4 relative z-0">
+        <main className="flex-1 bg-black p-4 relative z-0">
           {children}
         </main>
       </div>
