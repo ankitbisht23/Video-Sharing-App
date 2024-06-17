@@ -44,10 +44,12 @@ const Header = ({ toggleSidebar }) => {
               </Link>
             </div>
             <div>
+            <Link to="/logout">
               <a href="#" className="block px-4 py-2 hover:bg-gray-900">
                 <FaSignOutAlt className="inline-block mr-2" />
                 Logout
               </a>
+            </Link>
             </div>
           </div>
         )}
