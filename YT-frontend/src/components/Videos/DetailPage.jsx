@@ -3,12 +3,12 @@ import Header from '../Header/Header'
 import VideoPage from './VideoPage'
 const DetailPage = () => {
   return (
-    <div>
-      <Header/>
+    <>
+      {/* <Header/> */}
       <VideoPage/>
         
-     
-    </div>
+      </>
+   
   )
 }
 

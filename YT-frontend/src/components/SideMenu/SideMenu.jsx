@@ -1,48 +1,48 @@
-import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import React from 'react';
+import { MdVideoLibrary, MdPlaylistPlay, MdHistory, MdThumbUp } from 'react-icons/md';
+import { Link } from 'react-router-dom';
 
-const SideMenu = () => {
-  const [isOpen, setIsOpen] = useState(true);
-  const navigate = useNavigate();
-
-  const toggleMenu = () => {
-    setIsOpen(!isOpen);
-  };
-
+const Sidebar = ({ isOpen }) => {
   return (
-    <div className={`fixed top-0 left-0 h-full bg-gray-800 transition-transform transform ${isOpen ? 'translate-x-0' : '-translate-x-full'} w-64`}>
-      <div className="p-4">
-        <button
-          onClick={toggleMenu}
-          className="text-white px-4 py-2 mb-4 bg-blue-500 rounded hover:bg-blue-700"
-        >
-          {isOpen ? 'Close' : 'Open'} Menu
-        </button>
-        <ul className="text-white">
+    <aside className={`bg-[#212121] text-white transition-all duration-300 ${isOpen ? 'w-64' : 'w-16'}`}>
+      <nav className="p-4">
+        <ul>
           <li className="mb-4">
-            <Link to="/videos" className="block px-4 py-2 bg-gray-700 rounded hover:bg-gray-600">
-              Videos
+            <Link to="/">
+              <a href="#" className="flex items-center text-gray-300 hover:text-white">
+                <MdVideoLibrary className="mr-2" />
+                <span className={`${isOpen ? 'block' : 'hidden'}`}>Videos</span>
+              </a>
             </Link>
           </li>
           <li className="mb-4">
-            <Link to="/liked-videos" className="block px-4 py-2 bg-gray-700 rounded hover:bg-gray-600">
-              Liked Videos
+            <Link to="/likedVideos">
+              <a href="#" className="flex items-center text-gray-300 hover:text-white">
+                <MdThumbUp className="mr-2" />
+                <span className={`${isOpen ? 'block' : 'hidden'}`}>Liked Videos</span>
+              </a>
             </Link>
           </li>
           <li className="mb-4">
-            <Link to="/playlist" className="block px-4 py-2 bg-gray-700 rounded hover:bg-gray-600">
-              Playlist
+            <Link to="/playlist">
+              <a href="#" className="flex items-center text-gray-300 hover:text-white">
+                <MdPlaylistPlay className="mr-2" />
+                <span className={`${isOpen ? 'block' : 'hidden'}`}>Playlists</span>
+              </a>
             </Link>
           </li>
-          <li className="mb-4">
-            <Link to="/history" className="block px-4 py-2 bg-gray-700 rounded hover:bg-gray-600">
-              History
+          <li>
+            <Link to="/history">
+              <a href="#" className="flex items-center text-gray-300 hover:text-white">
+                <MdHistory className="mr-2" />
+                <span className={`${isOpen ? 'block' : 'hidden'}`}>History</span>
+              </a>
             </Link>
           </li>
         </ul>
-      </div>
-    </div>
+      </nav>
+    </aside>
   );
 };
 
-export default SideMenu;
+export default Sidebar;
