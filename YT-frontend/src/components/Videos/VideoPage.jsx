@@ -49,6 +49,17 @@ const VideoPage = () => {
       fetchVideoData();
     }
   }, [id, accessToken]);
+  const VideoTitle = ( title ) => {
+    // Function to process the title based on its length
+    const formatTitle = (title) => {
+      if (title.length > 20) {
+        return `${title.substring(0, 20)}...`;
+      }
+      return title;
+    };
+    //console.log(formatTitle(title),'tittle len')
+    return <div>{formatTitle(title)}</div>;
+  };
 
   const handleSubscribeToggle = async () => {
     try {
@@ -120,6 +131,7 @@ const VideoPage = () => {
       console.error('Error adding video to playlist:', error);
     }
   };
+  
 
   const currentTime = useMemo(() => new Date(), [video]);
   const createdAtTime = useMemo(() => new Date(video?.createdAt), [video?.createdAt]);
@@ -129,13 +141,13 @@ const VideoPage = () => {
   if (!video) return <div>Error loading video.</div>;
 
   return (
-    <div className="flex flex-col lg:flex-row lg:space-x-8">
+    <div className="flex flex-col lg:flex-row lg:space-x-8 bg-black text-white">
       <div className="flex-1 p-4 space-y-6">
         <div className="lg:max-w-5xl lg:mx-auto">
           <div className="relative pt-[56.25%] h-0 overflow-hidden rounded-lg shadow-xl">
             <iframe
               src={video.videoFile?.url}
-              title={video.title}
+              title={ VideoTitle(video.title)}
               className="absolute top-0 left-0 w-full h-full"
               frameBorder="0"
               allowFullScreen
@@ -144,7 +156,7 @@ const VideoPage = () => {
         </div>
         <div className="space-y-2">
           <h1 className="text-3xl font-bold">{video.title}</h1>
-          <p className="text-gray-600 text-lg">
+          <p className="text-white text-lg">
             {video.views} views • {timeAgo}
           </p>
         </div>
@@ -157,7 +169,7 @@ const VideoPage = () => {
             />
             <div>
               <h2 className="text-xl font-bold">{video.owner?.username}</h2>
-              <p className="text-gray-500">{video.owner?.subscribersCount} subscribers</p>
+              <p className="text-white">{video.owner?.subscribersCount} subscribers</p>
             </div>
             <button
               onClick={handleSubscribeToggle}
@@ -170,7 +182,7 @@ const VideoPage = () => {
           <div className="flex items-center">
             <button
               onClick={handleLikeToggle}
-              className={`flex items-center text-2xl mr-4 ${isLiked ? 'text-blue-500' : 'text-gray-500'}`}
+              className={`flex items-center text-2xl mr-4 ${isLiked ? 'text-blue-500' : 'text-white'}`}
             >
               <FaThumbsUp className="mr-2 text-2xl" /> {likes}
             </button>
@@ -178,11 +190,11 @@ const VideoPage = () => {
               onClick={handleSaveVideo}
               className="flex items-center text-lg"
             >
-              <FaBookmark className="mr-2 text-2xl text-gray-500" /> Save
+              <FaBookmark className="mr-2 text-2xl text-white" /> Save
             </button>
           </div>
         </div>
-        <div className="text-gray-800">
+        <div className="text-white">
           <p>{video.description}</p>
         </div>
         <div className="pt-6 border-t border-gray-200">
@@ -191,7 +203,7 @@ const VideoPage = () => {
             <textarea
               value={newComment}
               onChange={(e) => setNewComment(e.target.value)}
-              className="w-full p-2 border border-gray-300 rounded"
+              className="w-full p-2 border border-gray-300 rounded bg-gray-200"
               rows="3"
               placeholder="Write a comment..."
             />
@@ -211,7 +223,7 @@ const VideoPage = () => {
               />
               <div>
                 <p className="font-bold">{comment.owner.username}</p>
-                <p className="text-gray-700">{comment.content}</p>
+                <p className="text-white">{comment.content}</p>
               </div>
             </div>
           ))}
@@ -228,8 +240,8 @@ const VideoPage = () => {
                 className="w-40 h-24 object-cover rounded-lg mr-4"
               />
               <div>
-                <h3 className="font-bold">{video.title}</h3>
-                <p className="text-gray-600">
+                <h3 className="font-bold">{VideoTitle(video.title)}</h3>
+                <p className="text-white">
                   By {video.ownerDetails.username} • {video.views} views
                 </p>
               </div>
@@ -239,8 +251,8 @@ const VideoPage = () => {
       </aside>
 
       {isPlaylistModalOpen && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-          <div className="bg-white p-6 rounded-lg shadow-lg max-w-md w-full">
+        <div className="fixed inset-0 flex items-center justify-center bg-opacity-50">
+          <div className=" broder-2 bg-[#212121] shadow-2 p-6 rounded-lg shadow-lg max-w-md w-full">
             <h2 className="text-xl font-bold mb-4">Select a Playlist</h2>
             <ul className="space-y-2">
               {playlists.map((playlist) => (

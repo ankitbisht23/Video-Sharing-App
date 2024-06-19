@@ -4,7 +4,7 @@ import VideoPage from './VideoPage'
 const DetailPage = () => {
   return (
     <div>
-      <Header/>
+      {/* <Header/> */}
       <VideoPage/>
         
      
