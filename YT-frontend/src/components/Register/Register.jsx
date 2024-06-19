@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from '../../axios.js';
+import { useNavigate } from 'react-router-dom';
 
 const Register = () => {
   console.log("register")
@@ -10,6 +11,7 @@ const Register = () => {
   const [avatar, setAvatar] = useState(null);
   const [coverImage, setCoverImage] = useState(null);
   const [error, setError] = useState('');
+  const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -118,11 +120,18 @@ const Register = () => {
           </div>
           <button
             type="submit"
-            className="w-full px-4 py-2 text-white bg-blue-500 rounded hover:bg-blue-700"
+            className="w-full px-4 py-2 mb-4 text-white bg-blue-500 rounded hover:bg-blue-700"
           >
             Register
           </button>
+          
         </form>
+        <button
+            onClick={() => navigate('/login')}
+            className="w-full px-4 py-2 text-white bg-green-500 rounded hover:bg-blue-700"
+          >
+            Login
+          </button>
       </div>
     </div>
   );

@@ -145,27 +145,23 @@ const getSubscribedChannels = asyncHandler(async (req, res) => {
                 localField: "channel",
                 foreignField: "_id",
                 as: "subscribedChannel",
-                pipeline: [
-                    {
-                        $lookup: {
-                            from: "videos",
-                            localField: "_id",
-                            foreignField: "owner",
-                            as: "videos",
-                        },
-                    },
-                    {
-                        $addFields: {
-                            latestVideo: {
-                                $last: "$videos",
-                            },
-                        },
-                    },
-                ],
             },
         },
         {
             $unwind: "$subscribedChannel",
+        },
+        {
+            $lookup: {
+                from: "subscriptions",
+                localField: "subscribedChannel._id",
+                foreignField: "channel",
+                as: "subscribers"
+            }
+        },
+        {
+            $addFields: {
+                "subscribedChannel.subscribersCount": { $size: "$subscribers" }
+            }
         },
         {
             $project: {
@@ -175,17 +171,7 @@ const getSubscribedChannels = asyncHandler(async (req, res) => {
                     username: 1,
                     fullName: 1,
                     "avatar.url": 1,
-                    latestVideo: {
-                        _id: 1,
-                        "videoFile.url": 1,
-                        "thumbnail.url": 1,
-                        owner: 1,
-                        title: 1,
-                        description: 1,
-                        duration: 1,
-                        createdAt: 1,
-                        views: 1
-                    },
+                    subscribersCount: 1
                 },
             },
         },
