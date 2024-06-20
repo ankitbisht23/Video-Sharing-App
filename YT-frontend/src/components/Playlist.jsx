@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import axios from '../axios.js';
-
+import {PlaylistCard} from './PlaylistCard.jsx';
 const Playlist = () => {
   const accessToken = useSelector(state => state.auth.accessToken);
   const user = useSelector(state => state.auth.user);
@@ -71,7 +71,7 @@ const Playlist = () => {
       </div>
 
       {isFormOpen && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
           <div className="bg-white p-8 rounded-lg shadow-lg max-w-md w-full">
             <h3 className="text-xl  font-bold mb-4">Create New Playlist</h3>
             <input
@@ -106,23 +106,13 @@ const Playlist = () => {
         </div>
       )}
 
-      <div>
+      <div className=''>
         {playlists.length === 0 ? (
           <div>No playlists found</div>
         ) :(
             <div className='grid gap-4 grid-cols-3'>
-                
-          {      playlists.map(playlist => (
-          <div key={playlist._id} className="bg-white shadow-md rounded-lg overflow-hidden mb-4">
-            <div className="p-4">
-              <h3 className="font-bold text-lg mb-2">{playlist.name}</h3>
-              <p className="text-gray-600 mb-2">{playlist.description}</p>
-              <p className="text-gray-600 mb-2">Total Videos: {playlist.totalVideos}</p>
-              <p className="text-gray-600 mb-2">Total Views: {playlist.totalViews}</p>
-              <p className="text-gray-600">Last Updated: {new Date(playlist.updatedAt).toLocaleString()}</p>
-            </div>
-          </div>
-        ))}
+             {console.log(playlists,'playbabe')}   
+            <PlaylistCard playlists={playlists}/>
             </div>
         )}
       </div>
