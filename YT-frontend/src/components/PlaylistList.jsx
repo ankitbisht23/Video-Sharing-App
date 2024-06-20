@@ -1,8 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import {VideoTitle,formatDuration} from '../utils/timeDiff.js'
- 
+import { useSelector } from 'react-redux';
+import axios from '../axios.js';
+import { MdOutlineDeleteOutline } from "react-icons/md";
+import {FaTrash} from 'react-icons/fa';
 const PlaylistList = ({videos}) => {
+    const accessToken = useSelector(state => state.auth.accessToken);
     {console.log('PlayLIst')}
     console.log(videos,'videos')
   if (!videos) {
@@ -15,6 +19,19 @@ const PlaylistList = ({videos}) => {
       </div>
     );
   }
+  const  removeFromPlaylist=async(id)=>{
+
+    try {
+        
+        const removerVideo = await axios.patch(`/playlist/remove/${id}`, {
+          headers: { 'Authorization': `Bearer ${accessToken}` }
+        });
+        
+      } catch (error) {
+        console.error('Error fetching video data:', error);
+        setLoading(false);
+      }
+  }     
 
   return (
     
@@ -23,6 +40,7 @@ const PlaylistList = ({videos}) => {
       <div className="flex flex-col gap-4 w-full h-[1500px]">
         {videos.map((video) => (
           <div key={video._id} className="bg-black shadow-md rounded-lg overflow-hidden flex flex-row gap-2">
+            
             <Link to={`/watch/${video._id}`}>
               <div className="w-96 aspect-video relative hover:scale-110 ease-in-out duration-300 hover:rounded-lg">
                 <img
@@ -51,6 +69,7 @@ const PlaylistList = ({videos}) => {
               </p>
               <div className='w-18'><p className='text-white text-left text-0.5xl '>{VideoTitle(video.description,100)}</p></div>
             </div>
+          
           </div>
         ))}
       </div>
