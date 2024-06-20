@@ -270,7 +270,11 @@ const getPlaylistById = asyncHandler(async (req, res) => {
                     description: 1,
                     duration: 1,
                     createdAt: 1,
-                    views: 1
+                    views: 1,
+                    ownerDetails: {
+                        username: "$owner.username",
+                        "avatar.url": "$owner.avatar.url"
+                    }
                 },
                 owner: {
                     username: 1,
@@ -279,7 +283,6 @@ const getPlaylistById = asyncHandler(async (req, res) => {
                 }
             }
         }
-        
     ]);
 
     return res
@@ -315,6 +318,9 @@ const getUserPlaylists = asyncHandler(async (req, res) => {
                 },
                 totalViews: {
                     $sum: "$videos.views"
+                },
+                firstVideo: {
+                    $arrayElemAt: ["$videos", 0]
                 }
             }
         },
@@ -325,7 +331,15 @@ const getUserPlaylists = asyncHandler(async (req, res) => {
                 description: 1,
                 totalVideos: 1,
                 totalViews: 1,
-                updatedAt: 1
+                updatedAt: 1,
+                firstVideo: {
+                    _id: 1,
+                    "videoFile.url": 1,
+                    "thumbnail.url": 1,
+                    title: 1,
+                    duration: 1,
+                    views: 1
+                }
             }
         }
     ]);
