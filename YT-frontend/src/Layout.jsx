@@ -35,26 +35,27 @@ function Layout() {
   }
   else{
     return (
-      <div className="min-h-screen grid grid-cols-[auto,1fr] grid-rows-[auto,1fr]">
-      {/* Header */}
-      <header className="col-span-2 bg-gray-800">
-        <Header toggleSidebar={toggleSidebar} />
-      </header>
+<div className="h-full w-full bg-black">
+  {/* Header */}
+  <header className="col-span-2 bg-gray-800 fixed top-0 left-0 right-0 z-50">
+    <Header toggleSidebar={toggleSidebar} />
+  </header>
 
-      {/* Sidebar */}
-      <aside
-        className={`bg-gray-700 transition-all duration-300 ${
-          sidebarOpen ? 'w-64' : 'w-16'
-        }`}
-      >
-        <Sidebar isOpen={sidebarOpen} />
-      </aside>
+  {/* Sidebar */}
+  <aside
+    className={`bg-black transition-all duration-300 fixed top-12 left-0 bottom-0 ${
+      sidebarOpen ? 'w-64' : 'w-16'
+    } z-40`}
+  >
+    <Sidebar isOpen={sidebarOpen}/>
+  </aside>
 
-      {/* Main Content */}
-      <main className="overflow-y-auto bg-gray-100 p-4">
-        <Outlet/>
-      </main>
-    </div>
+  {/* Main Content */}
+  <main className="min-h-screen bg-black ml-[64px] mt-[60px]">
+    <Outlet />
+    
+  </main>
+</div>
     );
   }
 

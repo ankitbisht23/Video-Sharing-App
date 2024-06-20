@@ -30,10 +30,10 @@ const LikedVideosPage = () => {
   }, [accessToken]); // Add accessToken to the dependency array
 
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="min-h-screen">
       
         {/* <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8"> */}
-          {/* <h2 className="text-2xl font-bold mb-4">Liked Videos</h2> */}
+          <h2 className=" text-white text-2xl font-bold  ml-8">Liked Videos</h2>
           <LikedVideos likedVideos={likedVideos} />
         {/* </div> */}
       

@@ -42,7 +42,7 @@ const Videos = () => {
   {console.log(videos[0])}
   
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4">
+    <div className="bg-black grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4 w-[100%] h-[100%]">
       {<VideoCard videos={videos}/>}
     </div>
   );

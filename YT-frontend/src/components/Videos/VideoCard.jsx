@@ -1,5 +1,5 @@
 
-import {formatDuration,timeDifference} from '../../utils/timeDiff.js'
+import {formatDuration,timeDifference,VideoTitle} from '../../utils/timeDiff.js'
 import { useNavigate } from 'react-router-dom';
 
 const VideoCard = ({videos}) => {
@@ -9,17 +9,7 @@ const VideoCard = ({videos}) => {
         navigate(`/watch/${video._id}`);
       };
       console.log(videos);
-      const VideoTitle = ( title ) => {
-        // Function to process the title based on its length
-        const formatTitle = (title) => {
-          if (title.length > 30) {
-            return `${title.substring(0, 30)}...`;
-          }
-          return title;
-        };
       
-        return <div>{formatTitle(title)}</div>;
-      };
   return (
     
       videos.map((video) => (
@@ -37,7 +27,7 @@ const VideoCard = ({videos}) => {
             <div className='w-12'><img src={video.ownerDetails.avatar.url} className='rounded-full w-8 h-8'/></div>
             <div className=''>
               
-              <h1 className='text-1xl font-bold font-sans text-white'>{VideoTitle(video.title)}</h1>
+              <h1 className='text-1xl font-bold font-sans text-white'>{VideoTitle(video.title,30)}</h1>
 
               <div className='flex flex-row text-white gap-1'>
               <p className=''>{video.ownerDetails.username}</p>

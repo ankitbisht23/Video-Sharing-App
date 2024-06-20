@@ -11,7 +11,7 @@ const Header = ({ toggleSidebar }) => {
   const user = useSelector(state => state.auth.user);
 
   return (
-    <header className="bg-[#212121] text-white flex px-4 py-2 justify-between">
+    <header className="bg-black text-white flex px-4 py-2 justify-between">
       <div className='flex flex-row gap-4 justify-around'>
         <div className="flex items-center">
           <button onClick={toggleSidebar} className="text-2xl mr-4 focus:outline-none">

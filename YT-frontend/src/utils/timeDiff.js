@@ -29,3 +29,15 @@ export const timeDifference = (current, previous) => {
     console.log(minutes,'minutes', remainingSeconds,'seconds')
     return `${minutes}:${remainingSeconds < 10 ? '0' : ''}${remainingSeconds}`;
   }
+
+  export const VideoTitle = ( title,len ) => {
+    // Function to process the title based on its length
+    // const formatTitle = (title,len) => {
+      if (title.length > len) {
+        return `${title.substring(0, len)}...`;
+      }
+      return title;
+    // };
+  
+    // return formatTitle(title,len);
+  };

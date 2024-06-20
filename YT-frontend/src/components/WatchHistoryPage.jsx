@@ -29,12 +29,12 @@ const WatchHistoryPage = () => {
   }, [accessToken]);
 
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="min-h-screen">
       
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <h2 className="text-2xl font-bold mb-4">Watch History</h2>
+        {/* <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 "> */}
+          <h2 className="text-2xl font-bold mb-4 text-white">Watch History</h2>
           <WatchHistory watchHistory={watchHistory} />
-        </div>
+        {/* </div> */}
      
     </div>
   );
