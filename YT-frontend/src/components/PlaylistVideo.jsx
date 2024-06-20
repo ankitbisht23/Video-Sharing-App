@@ -34,7 +34,7 @@ const PlaylistVideo = () => {
     <div className="min-h-screen">
           <h2 className=" text-white text-2xl font-bold  ml-8">{Videos.name}</h2> 
              
-          <PlaylistList videos={Videos.videos} PlaylistId={Videos._id}/>
+          <PlaylistList videoss={Videos.videos} PlaylistId={Videos._id}/>
     </div>
   )
 }

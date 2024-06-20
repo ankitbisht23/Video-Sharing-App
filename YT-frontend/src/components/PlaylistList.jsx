@@ -1,14 +1,20 @@
-import React from 'react';
+import React, { useState,useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import {VideoTitle,formatDuration} from '../utils/timeDiff.js'
 import { useSelector } from 'react-redux';
 import axios from '../axios.js';
-import { MdOutlineDeleteOutline } from "react-icons/md";
+
 import {FaTrash} from 'react-icons/fa';
-const PlaylistList = ({videos,PlaylistId}) => {
+const PlaylistList = ({videoss,PlaylistId}) => {
     const accessToken = useSelector(state => state.auth.accessToken);
-    {console.log('PlayLIst')}
-    console.log(videos,'videos')
+    const [videos,setVideos]=useState(videoss);
+    useEffect(() => {
+      setVideos(videoss);
+    }, [videoss]);
+  
+    console.log("videoss", videoss);
+    console.log("videos", videos);
+    
   if (!videos || videos.length==0) {
     return (
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-white">
@@ -29,7 +35,7 @@ const PlaylistList = ({videos,PlaylistId}) => {
           headers: { 'Authorization': `Bearer ${accessToken}` }
         });
         console.log(res)
-        videos.filter(video => video._id !== VideoId);
+        setVideos(videos.filter(video => video._id !== VideoId));
         console.log("done")
         console.log(videos);
       } catch (error) {
