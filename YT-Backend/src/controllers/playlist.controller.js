@@ -4,6 +4,7 @@ import ApiResponse from "../utils/ApiResponse.js";
 import ApiError from "../utils/apiError.js";
 import asyncHandler from "../utils/asyncHandler.js";
 import mongoose, { isValidObjectId } from "mongoose";
+import { User } from "../models/user.model.js";
 
 const createPlaylist = asyncHandler(async (req, res) => {
     const { name, description } = req.body;
@@ -203,17 +204,13 @@ const removeVideoFromPlaylist = asyncHandler(async (req, res) => {
 
 const getPlaylistById = asyncHandler(async (req, res) => {
     const { playlistId } = req.params;
-
     if (!isValidObjectId(playlistId)) {
         throw new ApiError(400, "Invalid PlaylistId");
     }
-
     const playlist = await Playlist.findById(playlistId);
-
     if (!playlist) {
         throw new ApiError(404, "Playlist not found");
     }
-
     const playlistVideos = await Playlist.aggregate([
         {
             $match: {
@@ -277,6 +274,7 @@ const getPlaylistById = asyncHandler(async (req, res) => {
                     }
                 },
                 owner: {
+                    _id: 1,
                     username: 1,
                     fullName: 1,
                     "avatar.url": 1
@@ -285,10 +283,29 @@ const getPlaylistById = asyncHandler(async (req, res) => {
         }
     ]);
 
+    if (playlistVideos.length === 0) {
+        const ownerData = await User.findById(playlist.owner).select('username fullName avatar.url');
+
+        const emptyPlaylistData = {
+            name: playlist.name,
+            description: playlist.description,
+            createdAt: playlist.createdAt,
+            updatedAt: playlist.updatedAt,
+            totalVideos: 0,
+            totalViews: 0,
+            videos: [],
+            owner: ownerData
+        };
+
+        return res
+            .status(200)
+            .json(new ApiResponse(200, emptyPlaylistData, "playlist fetched successfully"));
+    }
+
     return res
         .status(200)
         .json(new ApiResponse(200, playlistVideos[0], "playlist fetched successfully"));
-});
+});  
 
 const getUserPlaylists = asyncHandler(async (req, res) => {
     const { userId } = req.params;

@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 import axios from '../axios.js';
 import { MdOutlineDeleteOutline } from "react-icons/md";
 import {FaTrash} from 'react-icons/fa';
-const PlaylistList = ({videos}) => {
+const PlaylistList = ({videos,PlaylistId}) => {
     const accessToken = useSelector(state => state.auth.accessToken);
     {console.log('PlayLIst')}
     console.log(videos,'videos')
@@ -19,14 +19,15 @@ const PlaylistList = ({videos}) => {
       </div>
     );
   }
-  const  removeFromPlaylist=async(id)=>{
+  const  removeFromPlaylist= async (VideoId)=>{
 
     try {
-        
-        const removerVideo = await axios.patch(`/playlist/remove/${id}`, {
+        console.log("removing")
+        const res = await axios.patch(`/playlist/remove/${VideoId}/${PlaylistId}`, {
           headers: { 'Authorization': `Bearer ${accessToken}` }
         });
-        
+        console.log(res)
+        videos.filter(video => video._id !== id);
       } catch (error) {
         console.error('Error fetching video data:', error);
         setLoading(false);
@@ -67,9 +68,11 @@ const PlaylistList = ({videos}) => {
               <p className="text-white mb-2">
                 By {video.ownerDetails.username} • {video.views} views
               </p>
-              <div className='w-18'><p className='text-white text-left text-0.5xl '>{VideoTitle(video.description,100)}</p></div>
+              <div className='w-18'><p className='text-white text-left text-0.5xl '>
+                {VideoTitle(video.description,100)}</p></div>
             </div>
-          
+            
+            <FaTrash className='text-white ml-auto self-center' onClick={removeFromPlaylist(video._id)}/>
           </div>
         ))}
       </div>

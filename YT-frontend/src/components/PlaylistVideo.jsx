@@ -9,7 +9,8 @@ const PlaylistVideo = () => {
     const {id}=useParams();
     const [Videos, setVideos] = useState([]);
   const accessToken = useSelector(state => state.auth.accessToken); // Get accessToken from Redux store
-  console.log(accessToken)
+ // console.log(accessToken)
+ console.log("id",id);
   useEffect(() => {
     const fetchPlaylistsVideo = async () => {
       try {
@@ -33,7 +34,7 @@ const PlaylistVideo = () => {
     <div className="min-h-screen">
           <h2 className=" text-white text-2xl font-bold  ml-8">{Videos.name}</h2> 
           {console.log(Videos.videos,'jj')}   
-          <PlaylistList videos={Videos.videos}/>
+          {/* <PlaylistList videos={Videos.videos} PlaylistId={Videos._id}/> */}
     </div>
   )
 }
