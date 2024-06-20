@@ -111,7 +111,7 @@ const Playlist = () => {
           <div>No playlists found</div>
         ) :(
             <div className='grid gap-4 grid-cols-3'>
-             {console.log(playlists,'playbabe')}   
+                
             <PlaylistCard playlists={playlists}/>
             </div>
         )}

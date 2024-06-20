@@ -9,9 +9,9 @@ const PlaylistList = ({videos,PlaylistId}) => {
     const accessToken = useSelector(state => state.auth.accessToken);
     {console.log('PlayLIst')}
     console.log(videos,'videos')
-  if (!videos) {
+  if (!videos || videos.length==0) {
     return (
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-white">
         {/* <h2 className="text-2xl font-bold mb-4">Liked Videos</h2> */}
         <div>
           <p>No videos found.</p>
@@ -20,17 +20,21 @@ const PlaylistList = ({videos,PlaylistId}) => {
     );
   }
   const  removeFromPlaylist= async (VideoId)=>{
-
+    console.log("button clicked");
     try {
         console.log("removing")
+        console.log("videoId",VideoId);
+        console.log("playlistid",PlaylistId);
         const res = await axios.patch(`/playlist/remove/${VideoId}/${PlaylistId}`, {
           headers: { 'Authorization': `Bearer ${accessToken}` }
         });
         console.log(res)
-        videos.filter(video => video._id !== id);
+        videos.filter(video => video._id !== VideoId);
+        console.log("done")
+        console.log(videos);
       } catch (error) {
         console.error('Error fetching video data:', error);
-        setLoading(false);
+       
       }
   }     
 
@@ -38,6 +42,7 @@ const PlaylistList = ({videos,PlaylistId}) => {
     
     <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
       {/* <h2 className="text-2xl font-bold mb-4">Liked Videos</h2> */}
+     
       <div className="flex flex-col gap-4 w-full h-[1500px]">
         {videos.map((video) => (
           <div key={video._id} className="bg-black shadow-md rounded-lg overflow-hidden flex flex-row gap-2">
@@ -72,7 +77,7 @@ const PlaylistList = ({videos,PlaylistId}) => {
                 {VideoTitle(video.description,100)}</p></div>
             </div>
             
-            <FaTrash className='text-white ml-auto self-center' onClick={removeFromPlaylist(video._id)}/>
+            <FaTrash className='text-white ml-auto self-center' onClick={() => removeFromPlaylist(video._id)} />
           </div>
         ))}
       </div>

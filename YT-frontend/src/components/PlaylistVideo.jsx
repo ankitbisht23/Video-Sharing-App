@@ -19,7 +19,7 @@ const PlaylistVideo = () => {
             'Authorization': `Bearer ${accessToken}` // Use accessToken from Redux store
           }
         });
-        console.log("res",response)
+       // console.log("res",response)
         setVideos(response.data.data);
       } catch (error) {
         console.error('Error fetching playlist videos:', error);
@@ -33,8 +33,8 @@ const PlaylistVideo = () => {
   return (
     <div className="min-h-screen">
           <h2 className=" text-white text-2xl font-bold  ml-8">{Videos.name}</h2> 
-          {console.log(Videos.videos,'jj')}   
-          {/* <PlaylistList videos={Videos.videos} PlaylistId={Videos._id}/> */}
+             
+          <PlaylistList videos={Videos.videos} PlaylistId={Videos._id}/>
     </div>
   )
 }
