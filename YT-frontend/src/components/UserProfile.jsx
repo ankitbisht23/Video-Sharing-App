@@ -6,11 +6,24 @@ import SubscribedChannels from './SubscribedChannels';
 import { Link } from 'react-router-dom';
 const UserProfile = () => {
   const user = useSelector((state) => state.auth.user);
-  const [activeTab, setActiveTab] = useState('videos');
+  const [activeTab, setActiveTab] = useState('Videos');
   const [userVideos, setUserVideos] = useState([]);
+  const [stats,setStats]=useState();
   const [showUploadForm, setShowUploadForm] = useState(false);
-
+  const navItems = [
+    {
+      name: 'Videos',
+    }, 
+  {
+      name: "Subscriptions",
+  },
+  {
+      name: "Dashboard",
+  },
+  ]
+  
   useEffect(() => {
+
     const fetchUserVideos = async () => {
       try {
         const response = await axios.get('/dashboard/videos', {
@@ -19,14 +32,30 @@ const UserProfile = () => {
           },
         });
         setUserVideos(response.data.data);
-        console.log("user is",user)
-        console.log("videos", response.data.data)
+      //  console.log ("user is",user)
+      //   console.log("videos", response.data.data)
+      } catch (error) {
+        console.error('Error fetching user videos:', error);
+      }
+    };
+    const fetchstats = async () => {
+      try {
+        const response = await axios.get(`/users/c/${user.username}`, {
+          headers: {
+            Authorization: `Bearer ${user.accessToken}`,
+          },
+        });
+        setStats(response.data.data);
+        console.log("stats is",stats)
+        // console.log("videos", response.data.data)
       } catch (error) {
         console.error('Error fetching user videos:', error);
       }
     };
 
+
     fetchUserVideos();
+    fetchstats();
   }, [user.accessToken]);
 
   const handleTabChange = (tab) => {
@@ -50,9 +79,20 @@ const UserProfile = () => {
           height: '300px',
         }}
       ></div>
+      <div className='text-white flex '>
+       
+        {/* <h1>{stats.username}</h1>
+        <h1>{stats.email}</h1>
+        <h1>{stats.avatar.url}</h1>
+        <h1>{stats.subcribersCount}</h1>
+        <h1>{stats.isSubscribed}</h1>
+        <div><image src={stats.avatar.url} className='rounded-full w-28 h-28'/></div>
+        <div></div> */}
+       
+      </div>
 
-      <div className="flex justify-center mt-4">
-        <button
+      <div className="flex justify-center mt-4  border-b">
+        {/* <button
           className={`px-4 py-2 mr-4 ${
             activeTab === 'videos'
               ? 'bg-blue-500 text-white'
@@ -81,10 +121,23 @@ const UserProfile = () => {
           onClick={() => handleTabChange('dashboard')}
         >
           Dashboard
-        </button>
+        </button> */}
+        <ul className='flex ml-auto'>
+            {navItems.map((item) => 
+                          <li key={item.name}>
+                <button
+                onClick={() =>  handleTabChange(item.name)}
+                className='inline-bock font-semibold text-white px-6 py-2 duration-200 hover:bg-violet-600 rounded-full mb-2'
+                >{item.name}</button>
+              </li>
+           
+            )}
+           
+          </ul>
+
       </div>
 
-      {activeTab === 'videos' && (
+      {activeTab === 'Videos' && (
         <div className="mt-4">
           <button
             className="bg-blue-500 text-white px-4 py-2 rounded"
@@ -132,13 +185,13 @@ const UserProfile = () => {
         </div>
       )}
 
-      {activeTab === 'subscriptions' && (
+      {activeTab === 'Subscriptions' && (
         <div className="mt-4">
           <SubscribedChannels userId={user._id} />
         </div>
       )}
 
-      {activeTab === 'dashboard' && (
+      {activeTab === 'Dashboard' && (
         <div className="mt-4">
           <h2 className="text-2xl font-bold mb-4">Dashboard</h2>
           {userVideos.map((video) => (
