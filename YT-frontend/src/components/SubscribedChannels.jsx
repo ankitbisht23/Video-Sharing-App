@@ -18,8 +18,9 @@ const SubscribedChannels = ({ userId }) => {
   }, [userId]);
 
   return (
-    <div>
+    <div className='text-white'>
       <h2 className="text-2xl font-bold mb-4">Subscribed Channels</h2>
+      <div className='flex flex-row gap-4'>
       {subscribedChannels.map((channel) => (
         <div key={channel.subscribedChannel._id} className="mb-4">
           <img
@@ -30,6 +31,7 @@ const SubscribedChannels = ({ userId }) => {
           <span>{channel.subscribedChannel.username}</span>
         </div>
       ))}
+      </div>
     </div>
   );
 };

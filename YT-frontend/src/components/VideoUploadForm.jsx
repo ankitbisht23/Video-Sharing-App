@@ -21,7 +21,7 @@ const VideoUploadForm = ({ onClose }) => {
       formData.append('thumbnail', thumbnail);
       formData.append('videoFile', videoFile);
 
-      const response = await axios.post('/video/upload', formData, {
+      const response = await axios.post('/video', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
           Authorization: `Bearer ${user.accessToken}`,

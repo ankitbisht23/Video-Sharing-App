@@ -24,14 +24,15 @@ const VideoCard = ({videos}) => {
             <p className='text-white absolute bottom-0 right-0 bg-black p-1 m-1 rounded'>{formatDuration(video.duration)}</p>
           </div>
           <div className='flex mt-2 gap-2 ml-2'>
-            <div className='w-12'><img src={video.ownerDetails.avatar.url} className='rounded-full w-8 h-8'/></div>
+            { video?.ownerDetails?.avatar?.url && <div className='w-12'><img src={video?.ownerDetails?.avatar?.url} className='rounded-full w-8 h-8'/></div>}
             <div className=''>
               
               <h1 className='text-1xl font-bold font-sans text-white'>{VideoTitle(video.title,30)}</h1>
 
               <div className='flex flex-row text-white gap-1'>
-              <p className=''>{video.ownerDetails.username}</p>
-              <p className='mt-[-20px] text-4xl'>.</p>
+              <p className=''>{video?.ownerDetails?.username}</p>
+              { video?.ownerDetails?.avatar?.url && <p className='mt-[-20px] text-4xl'>.</p>}
+              {console.log(video.createdAt,'videocard')}
               <p className=''>{timeDifference(new Date(),new Date(video.createdAt))}</p>
               </div>
             </div>
