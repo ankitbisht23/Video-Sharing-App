@@ -311,19 +311,27 @@ const updateVideo = asyncHandler(async (req, res) => {
         );
     }
 
-    //deleting old thumbnail and updating with new one
-    const thumbnailToDelete = video.thumbnail.public_id;
+    let thumbnailUpdate = {};
+    let thumbnailToDelete = null;
 
-    const thumbnailLocalPath = req.file?.path;
+    // Check if a new thumbnail is provided
+    if (req.file) {
+        const thumbnailLocalPath = req.file.path;
+        const thumbnail = await uploadOnCloudinary(thumbnailLocalPath);
 
-    if (!thumbnailLocalPath) {
-        throw new ApiError(400, "thumbnail is required");
-    }
+        if (!thumbnail) {
+            throw new ApiError(400, "Failed to upload new thumbnail");
+        }
 
-    const thumbnail = await uploadOnCloudinary(thumbnailLocalPath);
+        thumbnailUpdate = {
+            thumbnail: {
+                public_id: thumbnail.public_id,
+                url: thumbnail.url
+            }
+        };
 
-    if (!thumbnail) {
-        throw new ApiError(400, "thumbnail not found");
+        // Mark the old thumbnail for deletion
+        thumbnailToDelete = video.thumbnail.public_id;
     }
 
     const updatedVideo = await Video.findByIdAndUpdate(
@@ -332,10 +340,7 @@ const updateVideo = asyncHandler(async (req, res) => {
             $set: {
                 title,
                 description,
-                thumbnail: {
-                    public_id: thumbnail.public_id,
-                    url: thumbnail.url
-                }
+                ...thumbnailUpdate
             }
         },
         { new: true }
@@ -345,7 +350,8 @@ const updateVideo = asyncHandler(async (req, res) => {
         throw new ApiError(500, "Failed to update video please try again");
     }
 
-    if (updatedVideo) {
+    // Delete the old thumbnail if a new one was uploaded
+    if (thumbnailToDelete) {
         await deleteOnCloudinary(thumbnailToDelete);
     }
 
@@ -353,7 +359,6 @@ const updateVideo = asyncHandler(async (req, res) => {
         .status(200)
         .json(new ApiResponse(200, updatedVideo, "Video updated successfully"));
 });
-
 // delete video
 const deleteVideo = asyncHandler(async (req, res) => {
     const { videoId } = req.params;

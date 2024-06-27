@@ -13,6 +13,7 @@ const VideoCard = ({videos}) => {
   return (
     
       videos.map((video) => (
+        video.isPublished && 
 
         <div
           key={video._id}

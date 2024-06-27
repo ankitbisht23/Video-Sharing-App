@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { setUser } from '../store/authSlice.js';
 import axios from '../axios';
 import VideoUploadForm from './VideoUploadForm';
 import SubscribedChannels from './SubscribedChannels';
@@ -7,13 +8,23 @@ import { Link } from 'react-router-dom';
 import { FaBell } from 'react-icons/fa';
 import VideoCard from './Videos/VideoCard'
 import {VideoTitle,formatDuration} from '../utils/timeDiff.js'
+import VideoEditForm from './VideoEditForm.jsx';
+import UserEditForm from './UserEditForm.jsx';
 const UserProfile = () => {
+
+  const dispatch = useDispatch();
+  const [isEditingProfile, setIsEditingProfile] = useState(false);
+
+
   const accessToken = useSelector(state => state.auth.accessToken);
   const user = useSelector((state) => state.auth.user);
   const [activeTab, setActiveTab] = useState('Videos');
   const [userVideos, setUserVideos] = useState([]);
   const [stats,setStats]=useState();
   const [showUploadForm, setShowUploadForm] = useState(false);
+
+  const [editingVideo, setEditingVideo] = useState(null);
+
   const navItems = [
     {
       name: 'Videos',
@@ -25,6 +36,33 @@ const UserProfile = () => {
       name: "Dashboard",
   },
   ]
+
+
+  const handleEditProfile = () => {
+    setIsEditingProfile(true);
+  };
+
+  const handleUpdateProfile = (updatedUser) => {
+    dispatch(setUser(updatedUser));
+    setStats(prevStats => ({
+      ...prevStats,
+      ...updatedUser
+    }));
+  };
+
+
+  const handleEditVideo = (video) => {
+    setEditingVideo(video);
+  };
+
+  const handleUpdateVideo = (updatedVideo) => {
+    setUserVideos(prevVideos =>
+      prevVideos.map(video =>
+        video._id === updatedVideo._id ? updatedVideo : video
+      )
+    );
+  };
+
   const handleSubscribeToggle = async () => {
     try {
       const response = await axios.post(`/subscriptions/c/${stats?._id}`, {}, {
@@ -38,6 +76,30 @@ const UserProfile = () => {
       }));
     } catch (error) {
       console.error('Error toggling subscription:', error);
+    }
+  };
+  const handlePublishToggle = async (videoId) => {
+    try {
+      const response = await axios.patch(`/video/toggle/publish/${videoId}`, {}, {
+        headers: { 'Authorization': `Bearer ${accessToken}` }
+      });
+      setUserVideos(prevVideos => 
+        prevVideos.map(video => 
+          video._id === videoId ? { ...video, isPublished: !video.isPublished } : video
+        )
+      );
+    } catch (error) {
+      console.error('Error toggling publish:', error);
+    }
+  };
+  const handleDeleteVideo = async (videoId) => {
+    try {
+      const response = await axios.delete(`/video/v/${videoId}`, {}, {
+        headers: { 'Authorization': `Bearer ${accessToken}` }
+      });
+      setUserVideos(prevVideos => prevVideos.filter(video => video._id !== videoId));
+    } catch (error) {
+      console.error('Error toggling publish:', error);
     }
   };
   
@@ -103,10 +165,7 @@ const UserProfile = () => {
       ></div>
       <div className='text-white flex justify-between'>
        
-        {/* <h1>{stats?.username}</h1>
-        <h1>{stats?.avatar?.url}</h1>
-        <h1>{stats?.subcribersCount}</h1>
-        <h1>{stats?.isSubscribed}</h1> */}
+      
         <div className=' flex flex-row gap-4'>
         <div className=''><img src={stats?.avatar?.url} className='rounded-full w-28 h-28'/></div>
         <div>
@@ -128,41 +187,17 @@ const UserProfile = () => {
         </div>
         </div>
 
-        <div className='mr-8 mt-9 '><button className='text-white hover:bg-violet-500 duration-300 ease-in-out rounded-lg p-2'>Edit Profile</button></div>
+        <div className='mr-8 mt-9 '>
+        <button className='text-white hover:bg-violet-500 duration-300 ease-in-out rounded-lg p-2'
+        onClick={handleEditProfile}
+        >
+        Edit Profile
+        </button></div>
        
       </div>
 
       <div className="flex justify-center mt-4  border-b">
-        {/* <button
-          className={`px-4 py-2 mr-4 ${
-            activeTab === 'videos'
-              ? 'bg-blue-500 text-white'
-              : 'bg-gray-200 text-gray-700'
-          }`}
-          onClick={() => handleTabChange('videos')}
-        >
-          Videos
-        </button>
-        <button
-          className={`px-4 py-2 mr-4 ${
-            activeTab === 'subscriptions'
-              ? 'bg-blue-500 text-white'
-              : 'bg-gray-200 text-gray-700'
-          }`}
-          onClick={() => handleTabChange('subscriptions')}
-        >
-          Subscribed Channels
-        </button>
-        <button
-          className={`px-4 py-2 ${
-            activeTab === 'dashboard'
-              ? 'bg-blue-500 text-white'
-              : 'bg-gray-200 text-gray-700'
-          }`}
-          onClick={() => handleTabChange('dashboard')}
-        >
-          Dashboard
-        </button> */}
+       
         <ul className='flex ml-auto'>
             {navItems.map((item) => 
                           <li key={item.name}>
@@ -190,35 +225,9 @@ const UserProfile = () => {
             <VideoUploadForm onClose={handleCloseUploadForm} />
           )}
           <div className="mt-4">
-            {/* {userVideos.map((video) => (
-              <div key={video._id} className="mb-4">
-                <h3>{video.title}</h3>
-                <p>{video.description}</p>
-                <p>Likes: {video.likesCount}</p>
-              </div>
-            ))} */}
+           
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-      {/* {userVideos.map((video) => (
-        <div key={video._id} className="bg-white shadow-md rounded-lg overflow-hidden">
-          <Link to={`/watch/${video._id}`}>
-            <div className="w-full aspect-video relative">
-              <img
-                src={video.thumbnail.url}
-                alt={video.title}
-                className="absolute inset-0 w-full h-full object-cover object-center"
-              />
-            </div>
-          </Link>
-          <div className="p-4">
-            <Link to={`/watch/${video._id}`}>
-              <h3 className="font-bold text-lg mb-2">{video.title}</h3>
-            </Link>
-            <p className="text-gray-600 mb-2">
-               {video.views} views
-            </p>
-          </div>
-        </div>
-      ))} */}
+     
       {console.log(userVideos,'uservideo')}
       <VideoCard videos={userVideos}/>
     </div>
@@ -240,9 +249,7 @@ const UserProfile = () => {
           {console.log(userVideos,'userVideos')}
           {userVideos.map((video) => (
             <div key={video._id} className="mb-8">
-              {/* <h3>{video.title}</h3>
-              <p>{video.description}</p>
-              <p>Likes: {video.likesCount}</p> */}
+              
               <div className="flex flex-col gap-4 w-full h-56">
                   
                     <div key={video._id} className="bg-black shadow-md rounded-lg overflow-hidden flex flex-row gap-2">
@@ -269,19 +276,42 @@ const UserProfile = () => {
                   
                 </div>
               <div>
-                <button className="hover:bg-violet-500 duration-300 ease-in-out text-white px-4 py-2 rounded mr-2">
+                <button className="hover:bg-violet-500 duration-300 ease-in-out text-white px-4 py-2 rounded mr-2"
+                onClick={() => handleEditVideo(video)}
+                >
                   Edit
                 </button>
-                <button className="hover:bg-violet-500 duration-300 ease-in-out text-white px-4 py-2 rounded mr-2">
+                <button className="hover:bg-violet-500 duration-300 ease-in-out text-white px-4 py-2 rounded mr-2"
+                onClick={() => handleDeleteVideo(video._id)}
+                >
                   Delete
                 </button>
-                <button className="hover:bg-violet-500 duration-300 ease-in-out text-white px-4 py-2 rounded">
+                <button className="hover:bg-violet-500 duration-300 ease-in-out text-white px-4 py-2 rounded"
+                onClick={() => handlePublishToggle(video._id)}
+                >
                   {video.isPublished ? 'Unpublish' : 'Publish'}
                 </button>
               </div>
             </div>
           ))}
+          
         </div>
+      )}
+      {editingVideo && (
+        <VideoEditForm
+          video={editingVideo}
+          onClose={() => setEditingVideo(null)}
+          onUpdate={handleUpdateVideo}
+          accessToken={accessToken}
+        />
+      )}
+      {isEditingProfile && (
+        <UserEditForm
+          user={user}
+          onClose={() => setIsEditingProfile(false)}
+          onUpdate={handleUpdateProfile}
+          accessToken={accessToken}
+        />
       )}
     </div>
   );
