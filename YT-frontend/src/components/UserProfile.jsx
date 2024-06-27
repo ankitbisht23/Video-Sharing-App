@@ -106,7 +106,7 @@ const UserProfile = () => {
   useEffect(() => {
     const fetchUserVideos = async () => {
       try {
-        const response = await axios.get('/dashboard/videos', {
+        const response = await axios.get(`/dashboard/videos/${user._id}`, {
           headers: {
             Authorization: `Bearer ${user.accessToken}`,
           },

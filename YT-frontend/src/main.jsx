@@ -22,6 +22,7 @@ import DetailPage from './components/Videos/DetailPage.jsx';
 import Videos from './components/Videos/Videos.jsx';
 import LikedVideosPage from './components/LikedVideosPage.jsx';
 import PlaylistVideo from './components/PlaylistVideo.jsx';
+import SearchResults from './components/SearchReasults.jsx';
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<Layout />}>
@@ -35,6 +36,7 @@ const router = createBrowserRouter(
       <Route path="playlist" element={<Playlist/>}/>
       <Route path="watch/:id" element={<DetailPage/>} />
       <Route path="playlist/:id" element={<PlaylistVideo/>} />
+      <Route path="/search" element={<SearchResults/>}/>
 
     </Route>
   )

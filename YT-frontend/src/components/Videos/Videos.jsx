@@ -20,7 +20,7 @@ const Videos = () => {
             'Authorization': `Bearer ${accessToken}`
           }
         });
-        //console.log("API Response:", response.data.data);
+        console.log("API Response:", response);
         const data = response.data.data.docs;
 
         setVideos(data);

@@ -8,7 +8,7 @@ import { useState } from 'react';
 import Header from './components/Header/Header.jsx';
 import Sidebar from './components/SideMenu/SideMenu.jsx';
 function Layout() {
-  console.log("layout")
+  //console.log("layout")
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const toggleSidebar = () => setSidebarOpen(!sidebarOpen);

@@ -1,14 +1,23 @@
 import React, { useState } from 'react';
 import { FaBars, FaSearch, FaSignOutAlt, FaUserCircle } from 'react-icons/fa';
 import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Header = ({ toggleSidebar }) => {
   const [userDropdownOpen, setUserDropdownOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
+  const navigate = useNavigate();
 
   const toggleUserDropdown = () => setUserDropdownOpen(!userDropdownOpen);
 
   const user = useSelector(state => state.auth.user);
+
+  const handleSearchSubmit = (e) => {
+    e.preventDefault();
+    if (searchQuery.trim()) {
+      navigate(`/search?query=${encodeURIComponent(searchQuery)}`);
+    }
+  };
 
   return (
     <header className="bg-black text-white flex px-4 py-2 justify-between">
@@ -20,14 +29,22 @@ const Header = ({ toggleSidebar }) => {
         </div>
         <div className='text-3xl font-bold'>Stream IO</div>
       </div>
-      <div className="relative w-[40%]">
+      <form onSubmit={handleSearchSubmit} className="relative w-[40%]">
         <input
           type="text"
           placeholder="Search..."
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
           className="bg-gray-700 text-white px-4 py-2 w-[100%] focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
-        <FaSearch className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400" aria-label="Search Icon" />
-      </div>
+        <button
+          type="submit"
+          className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 focus:outline-none"
+          aria-label="Search"
+        >
+          <FaSearch />
+        </button>
+      </form>
       <div className="relative">
         <button onClick={toggleUserDropdown} className="text-2xl focus:outline-none">
           {user?.avatar?.url ? (
@@ -39,17 +56,15 @@ const Header = ({ toggleSidebar }) => {
         {userDropdownOpen && (
           <div className="absolute flex flex-row right-0 mt-2 bg-gray-700 rounded-md shadow-lg z-50">
             <div>
-              <Link to="/profile">
-                <a href="#" className="block px-4 py-2 hover:bg-gray-900">User Profile</a>
+              <Link to="/profile" className="block px-4 py-2 hover:bg-gray-900">
+                User Profile
               </Link>
             </div>
             <div>
-            <Link to="/logout">
-              <a href="#" className="block px-4 py-2 hover:bg-gray-900">
+              <Link to="/logout" className="block px-4 py-2 hover:bg-gray-900">
                 <FaSignOutAlt className="inline-block mr-2" />
                 Logout
-              </a>
-            </Link>
+              </Link>
             </div>
           </div>
         )}

@@ -13,9 +13,12 @@ import { Like } from "../models/like.model.js";
 
 // get all videos based on query, sort, pagination
 const getAllVideos = asyncHandler(async (req, res) => {
+    console.log("req",req.query)
     const { page = 1, limit = 10, query, sortBy, sortType, userId } = req.query;
-    console.log(userId);
+    //console.log(userId);
     const pipeline = [];
+    console.log("query ",query)
+    
 
     // for using Full Text based search u need to create a search index in mongoDB atlas
     // you can include field mapppings in search index eg.title, description, as well
