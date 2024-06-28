@@ -28,7 +28,7 @@ const getAllVideos = asyncHandler(async (req, res) => {
     if (query) {
         pipeline.push({
             $search: {
-                index: "search-videos",
+                index: "videos",
                 text: {
                     query: query,
                     path: ["title", "description"] //search only on title, desc
