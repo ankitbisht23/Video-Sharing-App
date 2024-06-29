@@ -1,12 +1,18 @@
 import React, { useState } from 'react';
 import { FaBars, FaSearch, FaSignOutAlt, FaUserCircle } from 'react-icons/fa';
 import { useSelector } from 'react-redux';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { logout } from '../../store/authSlice.js';
+import { useNavigate } from 'react-router-dom';
 
 const Header = ({ toggleSidebar }) => {
   const [userDropdownOpen, setUserDropdownOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  
+
 
   const toggleUserDropdown = () => setUserDropdownOpen(!userDropdownOpen);
 
@@ -18,6 +24,11 @@ const Header = ({ toggleSidebar }) => {
       navigate(`/search?query=${encodeURIComponent(searchQuery)}`);
     }
   };
+  const logoutUser=()=>{
+    localStorage.clear();
+    dispatch(logout());
+    navigate('/login');
+  }
 
   return (
     <header className="bg-black text-white flex px-4 py-2 justify-between">
@@ -61,10 +72,10 @@ const Header = ({ toggleSidebar }) => {
               </Link>
             </div>
             <div>
-              <Link to="/logout" className="block px-4 py-2 hover:bg-gray-900">
+              <a onClick={()=>{logoutUser()}} className="block px-4 py-2 hover:bg-gray-900">
                 <FaSignOutAlt className="inline-block mr-2" />
                 Logout
-              </Link>
+              </a>
             </div>
           </div>
         )}

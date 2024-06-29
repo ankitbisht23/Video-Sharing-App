@@ -1,20 +1,24 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { logout } from '../../store/authSlice.js';
 import { useNavigate } from 'react-router-dom';
 
 function Logout() {
-  console.log("logout")
-  localStorage.clear();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  dispatch(logout());
-  navigate('/');
+
+  useEffect(() => {
+    console.log("logout");
+    localStorage.clear();
+    dispatch(logout());
+    navigate('/login');
+  }, [dispatch, navigate]);
+
   return (
     <div>
-      logout
+      Logging out...
     </div>
-  )
+  );
 }
 
-export default Logout
+export default Logout;
