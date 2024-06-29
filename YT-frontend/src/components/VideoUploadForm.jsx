@@ -43,7 +43,7 @@ const VideoUploadForm = ({ onClose }) => {
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-      <div className="bg-white p-6 rounded-lg shadow-lg max-w-md w-full">
+      <div className="bg-gray-700 p-6 rounded-lg shadow-lg max-w-md w-full">
         <h2 className="text-xl font-bold mb-4">Upload Video</h2>
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
@@ -51,11 +51,12 @@ const VideoUploadForm = ({ onClose }) => {
               Title
             </label>
             <input
+              style={{ backgroundColor: 'black', color: 'white' }}
               type="text"
               id="title"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
-              className="w-full px-4 py-2 border border-gray-300 rounded"
+              className="w-full border-black px-4 py-2 border border-gray-300 rounded"
               required
             />
           </div>
@@ -64,10 +65,11 @@ const VideoUploadForm = ({ onClose }) => {
               Description
             </label>
             <textarea
+              style={{ backgroundColor: 'black', color: 'white' }}
               id="description"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
-              className="w-full px-4 py-2 border border-gray-300 rounded"
+              className="w-full border-black px-4 py-2 border border-gray-300 rounded"
               rows="4"
               required
             />
@@ -77,11 +79,12 @@ const VideoUploadForm = ({ onClose }) => {
               Thumbnail
             </label>
             <input
+              style={{ backgroundColor: 'black', color: 'white' }}
               type="file"
               id="thumbnail"
               accept="image/*"
               onChange={(e) => setThumbnail(e.target.files[0])}
-              className="w-full px-4 py-2 border border-gray-300 rounded"
+              className="w-full px-4 border-black py-2 border border-gray-300 rounded"
               required
             />
           </div>
@@ -90,11 +93,12 @@ const VideoUploadForm = ({ onClose }) => {
               Video File
             </label>
             <input
+              style={{ backgroundColor: 'black', color: 'white' }}
               type="file"
               id="videoFile"
               accept="video/*"
               onChange={(e) => setVideoFile(e.target.files[0])}
-              className="w-full px-4 py-2 border border-gray-300 rounded"
+              className="w-full px-4 py-2 border-black  rounded"
               required
             />
           </div>
@@ -102,13 +106,13 @@ const VideoUploadForm = ({ onClose }) => {
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-2 bg-gray-300 text-gray-700 rounded mr-2"
+              className="px-4 py-2 bg-gray-500 hover:bg-gray-600 text-white  rounded mr-2"
             >
               Cancel
             </button>
             <button
               type="submit"
-              className="px-4 py-2 bg-blue-500 text-white rounded"
+              className="px-4 py-2 bg-violet-600 hover:bg-violet-700 text-white rounded"
               disabled={uploading}
             >
               {uploading ? 'Uploading...' : 'Upload'}

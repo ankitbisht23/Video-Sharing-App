@@ -10,10 +10,13 @@ import VideoCard from './Videos/VideoCard'
 import {VideoTitle,formatDuration} from '../utils/timeDiff.js'
 import VideoEditForm from './VideoEditForm.jsx';
 import UserEditForm from './UserEditForm.jsx';
+import { MdEdit } from "react-icons/md";
+import AvatarChangeForm from './AvatarChangeForm.jsx'
 const UserProfile = () => {
 
   const dispatch = useDispatch();
   const [isEditingProfile, setIsEditingProfile] = useState(false);
+  const [isEditingAvatar, setIsEditingAvatar] = useState(false);
 
 
   const accessToken = useSelector(state => state.auth.accessToken);
@@ -49,6 +52,7 @@ const UserProfile = () => {
       ...updatedUser
     }));
   };
+  
 
 
   const handleEditVideo = (video) => {
@@ -141,6 +145,10 @@ const UserProfile = () => {
       console.log('Stats:', stats);
     }
   }, [stats]);
+  const handleAvatarChange = () => {
+    console.log('im badass');
+    setIsEditingAvatar(true);
+  };
 
   const handleTabChange = (tab) => {
     setActiveTab(tab);
@@ -166,8 +174,10 @@ const UserProfile = () => {
       <div className='text-white flex justify-between'>
        
       
-        <div className=' flex flex-row gap-4'>
-        <div className=''><img src={stats?.avatar?.url} className='rounded-full w-28 h-28'/></div>
+        <div className=' flex flex-row gap-4 '>
+        <div className='relative group hover:scale-110 duration-300 ease-in-out'><img src={stats?.avatar?.url} className='rounded-full w-28 h-28'/>
+        <div className=' w-8 h-8 absolute right-2 top-4 opacity-0 group-hover:bg-violet-500 rounded-full group-hover:opacity-100 transition-opacity duration-300 ease-in-out'><MdEdit className='w-8 h-8' onClick={handleAvatarChange}/></div>
+        </div>
         <div>
           <h1 className='text-5xl font-semibold'>{stats?.username}</h1>
           <div className='flex flex-row gap-2'>
@@ -313,6 +323,14 @@ const UserProfile = () => {
           accessToken={accessToken}
         />
       )}
+      {isEditingAvatar && (
+      <AvatarChangeForm
+    user={user}
+    onClose={() => setIsEditingAvatar(false)}
+    onUpdate={handleUpdateProfile}
+    accessToken={accessToken}
+    />
+)}
     </div>
   );
 };

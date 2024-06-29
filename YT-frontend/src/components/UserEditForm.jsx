@@ -25,15 +25,16 @@ const UserEditForm = ({ user, onClose, onUpdate, accessToken }) => {
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-      <div className="bg-white p-6 rounded-lg">
+      <div className="bg-gray-600 p-6 rounded-lg">
         <h2 className="text-2xl font-bold mb-4">Edit Profile</h2>
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="fullName">
+            <label className="block text-black text-sm font-bold mb-2" htmlFor="fullName">
               Full Name
             </label>
             <input
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              style={{ backgroundColor: 'black', color: 'white' }}
+              className="shadow border-black appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               id="fullName"
               type="text"
               value={fullName}
@@ -41,11 +42,12 @@ const UserEditForm = ({ user, onClose, onUpdate, accessToken }) => {
             />
           </div>
           <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="email">
+            <label className="block text-black text-sm font-bold mb-2" htmlFor="email">
               Email
             </label>
             <input
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              style={{ backgroundColor: 'black', color: 'white' }}
+              className="shadow border-black appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               id="email"
               type="email"
               value={email}
@@ -54,7 +56,7 @@ const UserEditForm = ({ user, onClose, onUpdate, accessToken }) => {
           </div>
           <div className="flex items-center justify-between">
             <button
-              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+              className="bg-violet-600 hover:bg-violet-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
               type="submit"
             >
               Update

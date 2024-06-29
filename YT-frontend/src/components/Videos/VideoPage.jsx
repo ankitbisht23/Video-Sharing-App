@@ -162,11 +162,11 @@ const VideoPage = () => {
         </div>
         <div className="flex justify-between items-center py-4 border-b border-gray-200">
           <div className="flex items-center">
-            <img
+            <a href={`/channel/${video.owner._id}/${video.owner.username}`}><img
               src={video.owner?.avatar?.url}
               alt={video.owner?.username}
               className="w-12 h-12 rounded-full mr-4"
-            />
+            /></a>
             <div>
               <h2 className="text-xl font-bold">{video.owner?.username}</h2>
               <p className="text-white">{video.owner?.subscribersCount} subscribers</p>
@@ -209,7 +209,7 @@ const VideoPage = () => {
             />
             <button
               onClick={handleCommentSubmit}
-              className="mt-2 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+              className="mt-2 px-4 py-2 bg-violet-600 text-white rounded hover:bg-violet-700"
             >
               Comment
             </button>
@@ -234,11 +234,11 @@ const VideoPage = () => {
         <div className="space-y-4">
           {recommendedVideos.map((video) => (
             <div key={video._id} className="flex">
-              <img
+              <a href={`/watch/${video._id}`}> <img
                 src={video.thumbnail?.url}
                 alt={video.title}
                 className="w-40 h-24 object-cover rounded-lg mr-4"
-              />
+              /></a>
               <div>
                 <h3 className="font-bold">{VideoTitle(video.title)}</h3>
                 <p className="text-white">
@@ -252,14 +252,15 @@ const VideoPage = () => {
 
       {isPlaylistModalOpen && (
         <div className="fixed inset-0 flex items-center justify-center bg-opacity-50">
-          <div className=" broder-2 bg-[#212121] shadow-2 p-6 rounded-lg shadow-lg max-w-md w-full">
+          <div className=" broder-2 bg-gray-700 shadow-2 p-6 rounded-lg shadow-lg max-w-md w-full">
             <h2 className="text-xl font-bold mb-4">Select a Playlist</h2>
             <ul className="space-y-2">
               {playlists.map((playlist) => (
                 <li
+                // style={{ backgroundColor: 'black', color: 'white'}}
                   key={playlist._id}
                   onClick={() => handleAddToPlaylist(playlist._id)}
-                  className="p-2 border border-gray-300 rounded hover:bg-gray-100 cursor-pointer"
+                  className="p-2 border-black text-white bg-black hover:bg-gray-800 cursor-pointer"
                 >
                   {playlist.name}
                 </li>
@@ -267,7 +268,7 @@ const VideoPage = () => {
             </ul>
             <button
               onClick={() => setIsPlaylistModalOpen(false)}
-              className="mt-4 px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
+              className="mt-4 px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600"
             >
               Cancel
             </button>

@@ -23,6 +23,7 @@ import Videos from './components/Videos/Videos.jsx';
 import LikedVideosPage from './components/LikedVideosPage.jsx';
 import PlaylistVideo from './components/PlaylistVideo.jsx';
 import SearchResults from './components/SearchReasults.jsx';
+import ChannelProfile from './components/ChannelProfile.jsx'
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<Layout />}>
@@ -37,6 +38,7 @@ const router = createBrowserRouter(
       <Route path="watch/:id" element={<DetailPage/>} />
       <Route path="playlist/:id" element={<PlaylistVideo/>} />
       <Route path="/search" element={<SearchResults/>}/>
+      <Route path="/channel/:channelId/:channelName" element={<ChannelProfile/>}/>
 
     </Route>
   )

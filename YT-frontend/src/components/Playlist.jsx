@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import axios from '../axios.js';
 import {PlaylistCard} from './PlaylistCard.jsx';
+
 const Playlist = () => {
   const accessToken = useSelector(state => state.auth.accessToken);
   const user = useSelector(state => state.auth.user);
@@ -72,32 +73,35 @@ const Playlist = () => {
 
       {isFormOpen && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-          <div className="bg-white p-8 rounded-lg shadow-lg max-w-md w-full">
+          <div className="bg-gray-700 p-8 rounded-lg shadow-lg max-w-md w-full">
             <h3 className="text-xl  font-bold mb-4">Create New Playlist</h3>
             <input
+              style={{ backgroundColor: 'black', color: 'white'}}
               type="text"
               value={newPlaylistName}
               onChange={(e) => setNewPlaylistName(e.target.value)}
               placeholder="Playlist Name"
-              className="w-full p-2 border border-gray-300 rounded mb-2"
+              className="w-full text-white border-black p-2 border  rounded mb-2"
             />
             <textarea
+              style={{ backgroundColor: 'black', color: 'white'}}
               value={newPlaylistDescription}
               onChange={(e) => setNewPlaylistDescription(e.target.value)}
               placeholder="Playlist Description"
-              className="w-full p-2 border border-gray-300 rounded mb-2"
+              className="w-full p-2 border border-black rounded mb-2"
               rows="3"
             />
             <div className="flex justify-end space-x-2">
               <button
+                
                 onClick={() => setIsFormOpen(false)}
-                className="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600"
+                className="px-4 py-2 bg-gray-500 border-black text-white rounded hover:bg-gray-600"
               >
                 Cancel
               </button>
               <button
                 onClick={handleCreatePlaylist}
-                className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+                className="px-4 py-2 bg-violet-600 text-white rounded hover:bg-violet-700"
               >
                 Submit
               </button>
@@ -112,7 +116,7 @@ const Playlist = () => {
         ) :(
             <div className='grid gap-4 grid-cols-3'>
                 
-            <PlaylistCard playlists={playlists}/>
+            <PlaylistCard playlists={playlists} setPlaylists={setPlaylists}/>
             </div>
         )}
       </div>

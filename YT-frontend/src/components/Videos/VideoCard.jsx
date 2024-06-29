@@ -9,6 +9,9 @@ const VideoCard = ({videos}) => {
         navigate(`/watch/${video._id}`);
       };
       console.log(videos);
+    const handleChannelClick=(id,channelname)=>{
+      navigate(`/channel/${id}/${channelname}`);
+    };
       
   return (
     
@@ -25,7 +28,7 @@ const VideoCard = ({videos}) => {
             <p className='text-white absolute bottom-0 right-0 bg-black p-1 m-1 rounded'>{formatDuration(video.duration)}</p>
           </div>
           <div className='flex mt-2 gap-2 ml-2'>
-            { video?.ownerDetails?.avatar?.url && <div className='w-12'><img src={video?.ownerDetails?.avatar?.url} className='rounded-full w-8 h-8'/></div>}
+            { video?.ownerDetails?.avatar?.url && <div onClick={(e)=>{e.stopPropagation();handleChannelClick(video.ownerDetails._id,video.ownerDetails.username)}} className='w-12'><img src={video?.ownerDetails?.avatar?.url} className='rounded-full w-8 h-8'/></div>}
             <div className=''>
               
               <h1 className='text-1xl font-bold font-sans text-white'>{VideoTitle(video.title,30)}</h1>
