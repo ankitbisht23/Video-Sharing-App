@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import axios from '../axios.js';
-import {PlaylistCard} from './PlaylistCard.jsx';
+import PlaylistCard from './PlaylistCard.jsx';
 
 const Playlist = () => {
   const accessToken = useSelector(state => state.auth.accessToken);

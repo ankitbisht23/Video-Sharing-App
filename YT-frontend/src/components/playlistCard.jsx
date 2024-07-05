@@ -83,4 +83,4 @@ import axios from '../axios';
   )
 }
 
-export  {PlaylistCard}
+export  default PlaylistCard;
