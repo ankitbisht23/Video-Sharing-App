@@ -38,7 +38,7 @@ const Header = ({ toggleSidebar }) => {
             <FaBars />
           </button>
         </div>
-        <a href='/'><div className='text-3xl font-bold'>Stream IO</div></a>
+        <a href='/'><div className='text-3xl font-bold'>VidFlare</div></a>
       </div>
       <form onSubmit={handleSearchSubmit} className="relative w-[40%]">
         <input
