@@ -2,7 +2,6 @@
 import playlistImage from '../../public/play_image.jpeg'
 import { useNavigate } from 'react-router-dom';
 import {FaTrash} from 'react-icons/fa';
-import { MdEdit } from "react-icons/md";
 import {useState} from 'react';
 import { useSelector } from 'react-redux';
 
