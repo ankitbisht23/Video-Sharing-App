@@ -203,7 +203,7 @@ const VideoPage = () => {
             <textarea
               value={newComment}
               onChange={(e) => setNewComment(e.target.value)}
-              className="w-full p-2 border border-gray-300 rounded bg-gray-200"
+              className="w-full text-black p-2 border border-gray-300 rounded bg-gray-200"
               rows="3"
               placeholder="Write a comment..."
             />

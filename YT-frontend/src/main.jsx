@@ -26,21 +26,24 @@ import SearchResults from './components/SearchReasults.jsx';
 import ChannelProfile from './components/ChannelProfile.jsx'
 const router = createBrowserRouter(
   createRoutesFromElements(
-    <Route path="/" element={<Layout />}>
-      <Route path="" element={<Videos />} />
-      <Route path="register" element={<Register />} />
+    <>
+    <Route path="login" element={<Login />} />
+    <Route path="register" element={<Register />} />
+    <Route element={<Layout />}>
+      <Route path="/" element={<Videos />} />
       <Route path="profile" element={<UserProfile />} />
-      <Route path="login" element={<Login />} />
       <Route path="logout" element={<Logout />} />
-      <Route path="likedVideos" element={<LikedVideosPage/>}/>
-      <Route path="history" element={<WatchHistoryPage/>}/>
-      <Route path="playlist" element={<Playlist/>}/>
-      <Route path="watch/:id" element={<DetailPage/>} />
-      <Route path="playlist/:id" element={<PlaylistVideo/>} />
-      <Route path="/search" element={<SearchResults/>}/>
-      <Route path="/channel/:channelId/:channelName" element={<ChannelProfile/>}/>
-
+      <Route path="likedVideos" element={<LikedVideosPage />} />
+      <Route path="history" element={<WatchHistoryPage />} />
+      <Route path="playlist" element={<Playlist />} />
+      <Route path="watch/:id" element={<DetailPage />} />
+      <Route path="playlist/:id" element={<PlaylistVideo />} />
+      <Route path="search" element={<SearchResults />} />
+      <Route path="channel/:channelId/:channelName" element={<ChannelProfile />} />
+    
     </Route>
+    <Route path="*" element={<div>Page Not Found</div>} />
+    </>
   )
 );
 
