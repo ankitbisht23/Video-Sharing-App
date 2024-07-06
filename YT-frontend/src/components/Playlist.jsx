@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import axios from '../axios.js';
-import PlaylistCard from './PlaylistCard.jsx';
+// import PlaylistCard from './PlaylistCard.jsx';
+import CardPlayist from './CardPlaylist.jsx';
 
 const Playlist = () => {
   const accessToken = useSelector(state => state.auth.accessToken);
@@ -116,7 +117,7 @@ const Playlist = () => {
         ) :(
             <div className='grid gap-4 grid-cols-3'>
                 
-            <PlaylistCard playlists={playlists} setPlaylists={setPlaylists}/>
+            <CardPlayist playlists={playlists} setPlaylists={setPlaylists}/>
             </div>
         )}
       </div>
