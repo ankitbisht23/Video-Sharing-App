@@ -96,7 +96,7 @@ const Register = () => {
             <button
               type="submit"
               disabled={loading}
-              className="w-full py-2 text-white bg-violet-600 hover:bg-violet-800 rounded transition"
+              className="w-36 py-2 text-violet-700 bg-gradient-to-br from-black via-gray-900 to-purple-900 hover:bg-violet-800 rounded transition"
             >
               {loading ? "Registering..." : "Register"}
             </button>
@@ -104,7 +104,7 @@ const Register = () => {
           <button
             onClick={() => navigate("/login")}
             disabled={loading}
-            className="w-full py-2 ease-in-out duration-300  mt-3 text-violet-700 border border-violet-600 hover:bg-violet-100 rounded transition"
+            className="w-full py-2 ease-in-out duration-300  mt-3 text-violet-700  bg-gradient-to-br from-black via-gray-900 to-purple-900 hover:bg-violet-100 rounded transition"
           >
             Already have an account? Login
           </button>
